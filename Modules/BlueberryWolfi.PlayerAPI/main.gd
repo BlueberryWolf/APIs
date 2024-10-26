@@ -1,5 +1,6 @@
 extends Node
 signal _player_added(player)
+signal _player_removed(player)
 signal _ingame()
 
 var players = []
@@ -23,26 +24,28 @@ func _player_ready(node: Node):
 	
 	entities.connect("child_entered_tree", self, "player_added")
 
-func is_player(node: Node):
+func is_player(node: Node) -> bool:
 	return node.name == "player" or node.name.begins_with("@player@")
 
-func get_player_from_steamid(steamid: String):
+func get_player_from_steamid(steamid: String) -> Actor:
 	for actor in players:
 		if int(actor.owner_id) == int(steamid):
 			return actor
-	return null
 
-func get_player_name(player: Actor):
+func get_player_name(player: Actor) -> String:
 	if not is_player(player): return null
 	return player.get_node("Viewport/player_label").label
 
-func get_player_title(player: Actor):
+func get_player_title(player: Actor) -> String:
 	if not is_player(player): return null
 	return player.get_node("Viewport/player_label").title
 
-func get_player_steamid(player: Actor):
+func get_player_steamid(player: Actor) -> String:
 	if not is_player(player): return null
-	return
+	return player.owner_id
+	
+func player_removed(node):
+	emit_signal("_player_added", node)
 	
 func player_added(node):
 	if node.name == "player":
@@ -54,6 +57,7 @@ func player_added(node):
 		players.append(node)
 	else: return
 	
+	connect("tree_exited", node, "player_removed")
 	# wait 0.5 seconds to ensure player is properly initialized
 	yield(get_tree().create_timer(0.5), "timeout")
 	emit_signal("_player_added", node)
