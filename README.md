@@ -1,7 +1,7 @@
-# BlueberryWolfi.APIs
+# APIs
 APIs for Comfy WEBFISHING Mod Development in GDWeave
 
-I am too exhausted to make a proper usage docs but here are some basic usage examples to reference for now:
+#I am too exhausted to make a proper usage docs but here are some basic usage examples to reference for now:
 
 # Player API:
 ## An API that makes everything to do with players, actors, and steamids easier.
@@ -30,7 +30,7 @@ get_player_steamid(player: Actor) -> String # returns player's steam id
 var PlayerAPI
 
 func _ready():
-	PlayerAPI = get_node("/root/BlueberryWolfiAPIs/PlayerAPI")
+	PlayerAPI = get_node_or_nuill("/root/BlueberryWolfiAPIs/PlayerAPI")
 	PlayerAPI.connect("_player_added", self, "init_player")
 
 func init_player(player: Actor)
@@ -50,6 +50,8 @@ register_keybind(keybind_data: Dictionary) -> String # returns signal_name
 
 ### Code Example:
 ```gd
+KeybindsAPI = get_node_or_null("/root/BlueberryWolfiAPIs/KeybindsAPI")
+
 var pushtalk_mic_signal = KeybindAPI.register_keybind({
   "action_name": "toggle_ptt",
   "title": "Toggle Push to Talk",
