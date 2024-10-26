@@ -27,20 +27,20 @@ func _player_ready(node: Node):
 func is_player(node: Node) -> bool:
 	return node.name == "player" or node.name.begins_with("@player@")
 
-func get_player_from_steamid(steamid: String) -> Actor:
+func get_player_from_steamid(steamid: String):
 	for actor in players:
 		if int(actor.owner_id) == int(steamid):
 			return actor
 
-func get_player_name(player: Actor) -> String:
+func get_player_name(player: Actor):
 	if not is_player(player): return null
 	return player.get_node("Viewport/player_label").label
 
-func get_player_title(player: Actor) -> String:
+func get_player_title(player: Actor):
 	if not is_player(player): return null
 	return player.get_node("Viewport/player_label").title
 
-func get_player_steamid(player: Actor) -> String:
+func get_player_steamid(player: Actor):
 	if not is_player(player): return null
 	return player.owner_id
 	

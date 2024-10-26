@@ -37,6 +37,7 @@ func _input(event: InputEvent) -> void:
 			emit_signal(keybind.signal_name)
 		elif event.is_action_released(keybind.action_name):
 			emit_signal(keybind.signal_name + "_up")
+		
 
 func register_keybind(keybind_data: Dictionary) -> String:
 	var keybind = {
