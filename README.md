@@ -2,13 +2,16 @@
 
 A collection of APIs designed for use in the Comfy WEBFISHING mod within GDWeave, providing streamlined management for player interactions, keybinds, and more.
 
-## Installation
+## Installation (for the peeps)
+1. Ensure [GDWeave](https://github.com/NotNite/GDWeave) is installed and working properly
+2. [Download the latest release](https://github.com/BlueberryWolf/APIs/releases/latest/download/BlueberryWolfi.APIs.zip)
+3. Extract the zip to `BlueberryWolfi.APIs` and be careful to **not rename it**.
+4. Place the folder in `WEBFISHING/GDWeave/Mods/BlueberryWolfi.APIs`
+5. Install any other mods which use my API, like 
 
-> [Download the latest release](https://github.com/BlueberryWolf/APIs/releases/latest/download/BlueberryWolfi.APIs.zip)
+## Developer Usage (for the nerds)
 
-## Developer Usage
-
-1. Import the downloaded source code folder into your project directory as `mods/BlueberryWolfi.APIs`.
+1. Import the downloaded source code folder into your godot project directory as `mods/BlueberryWolfi.APIs`.
 2. Add an autoload entry in your project settings **named** `BlueberryWolfiAPIs` (no dot) to ensure that the APIs load before your mods.
 3. **Important:** When exporting your project, be careful not to include the source code of these APIs.
 
@@ -120,5 +123,4 @@ func _on_to_talk_button_up() -> void:
 ---
 
 ## Requirements
-
-Ensure [GDWeave](https://github.com/NotNite/GDWeave) is installed to use these APIs.
+* Ensure [GDWeave](https://github.com/NotNite/GDWeave) is properly installed to use these APIs.
