@@ -20,19 +20,39 @@ A collection of APIs designed for use in the Comfy WEBFISHING mod within GDWeave
 **PlayerAPI Example:**
 Importing PlayerAPI
 ```gdscript
-var _player_api: Node
+var PlayerAPI
 
 func _ready():
-	_player_api = get_node_or_null("/root/APIs/PlayerAPI")
+	PlayerAPI = get_node_or_null("/root/BlueberryWolfiAPIs/PlayerAPI")
+	PlayerAPI.connect("_player_added", self, "init_player")
+
+func init_player(player: Actor):
+	# example:
+	# print(PlayerAPI.get_player_name(player))
 ```
 
 **KeybindsAPI Example:**
 Importing KeybindsAPI
 ```gdscript
-var _keybind_api: Node
+var _keybinds_api
 
 func _ready():
-	_keybind_api = get_node("/root/APIs/KeybindsAPI")
+	_keybinds_api = get_node_or_null("/root/BlueberryWolfiAPIs/KeybindsAPI")
+
+	var pushtalk_mic_signal = KeybindAPI.register_keybind({
+	  "action_name": "toggle_ptt",
+	  "title": "Toggle Push to Talk",
+	  "key": KEY_T,
+	})
+	
+	_keybinds_api.connect(pushtalk_mic_signal, self, "_on_to_talk_button_down")       # key down signal is automatically created.
+	_keybinds_api.connect(pushtalk_mic_signal + "_up", self, "_on_to_talk_button_up") # key up signal is automatically created.
+
+func _on_to_talk_button_down() -> void:
+	print("Push to talk on")
+
+func _on_to_talk_button_up() -> void:
+	print("Push to talk off")
 ```
 
 ---
@@ -67,19 +87,6 @@ get_player_title(player: Actor) -> String          # Returns player's title
 get_player_steamid(player: Actor) -> String        # Returns player's Steam ID
 ```
 
-### Example Usage
-
-```gdscript
-var PlayerAPI
-
-func _ready():
-	PlayerAPI = get_node_or_null("/root/BlueberryWolfiAPIs/PlayerAPI")
-	PlayerAPI.connect("_player_added", self, "init_player")
-
-func init_player(player: Actor):
-    print(PlayerAPI.get_player_name(player))
-```
-
 ---
 
 ## KeybindsAPI
@@ -98,27 +105,6 @@ _keybind_changed(keybind: String, title: String, input_event: InputEventKey)
 register_keybind(keybind_data: Dictionary) -> String  # Registers a keybind, returns the signal name
 ```
 *Note: A signal with "_up" appended to the signal name is automatically created for key release.*
-
-### Example Usage
-
-```gdscript
-KeybindsAPI = get_node_or_null("/root/BlueberryWolfiAPIs/KeybindsAPI")
-
-var pushtalk_mic_signal = KeybindAPI.register_keybind({
-  "action_name": "toggle_ptt",
-  "title": "Toggle Push to Talk",
-  "key": KEY_T,
-})
-
-KeybindAPI.connect(pushtalk_mic_signal, self, "_on_to_talk_button_down")
-KeybindAPI.connect(pushtalk_mic_signal + "_up", self, "_on_to_talk_button_up")
-
-func _on_to_talk_button_down() -> void:
-  print("Push to talk on")
-
-func _on_to_talk_button_up() -> void:
-  print("Push to talk off")
-```
 
 ---
 
