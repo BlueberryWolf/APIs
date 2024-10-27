@@ -2,7 +2,7 @@ extends Node
 
 signal _keybind_changed(keybind, title, input_event)
 
-const ButtonScene = preload("res://mods/BlueberryWolfi.Apis/Modules/BlueberryWolfi.KeybindsAPI/Scenes/button.tscn")
+const ButtonScene = preload("res://mods/BlueberryWolfi.APIs/Modules/BlueberryWolfi.KeybindsAPI/Scenes/button.tscn")
 
 var PlayerAPI
 
