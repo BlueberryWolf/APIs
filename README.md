@@ -1,55 +1,104 @@
-# APIs
-APIs for Comfy WEBFISHING Mod Development in GDWeave
+# Comfy APIs for WEBFISHING Mod Development
 
-#I am too exhausted to make a proper usage docs but here are some basic usage examples to reference for now:
+A collection of APIs designed for use in the Comfy WEBFISHING mod within GDWeave, providing streamlined management for player interactions, keybinds, and more.
 
-# Player API:
-## An API that makes everything to do with players, actors, and steamids easier.
-### Variables:
-```gd
-PlayerAPI.local_player # local player as an actor
-PlayerAPI.in_game # player is in game
-PlayerAPI.players # list of Player Actors in the game
-```
-### Signals:
-```gd
-_player_added(player) # returns player actor on game join
-_ingame() # locaL player is in game
-```
-### Functions:
-```gd
-is_player(node: Node) -> bool # is node a Player?
-get_player_from_steamid(steamid: String) -> Actor # returns provided 
-get_player_name(player: Actor) -> String # returns player name
-get_player_title(player: Actor) -> String # returns player title
-get_player_steamid(player: Actor) -> String # returns player's steam id
+## Installation
+
+> [Download the latest release](https://github.com/BlueberryWolf/APIs/releases/latest/download/BlueberryWolfi.APIs.zip)
+
+## Developer Usage
+
+1. Import the downloaded source code folder into your project directory as `mods/BlueberryWolfi.APIs`.
+2. Add an autoload entry in your project settings **named** `BlueberryWolfiAPIs` (no dot) to ensure that the APIs load before your mods.
+3. **Important:** When exporting your project, be careful not to include the source code of these APIs.
+
+### Code Integration
+
+**PlayerAPI Example:**
+Importing PlayerAPI
+```gdscript
+var _player_api: Node
+
+func _ready():
+	_player_api = get_node_or_null("/root/APIs/PlayerAPI")
 ```
 
-### Code Example:
-```gd
+**KeybindsAPI Example:**
+Importing KeybindsAPI
+```gdscript
+var _keybind_api: Node
+
+func _ready():
+	_keybind_api = get_node("/root/APIs/KeybindsAPI")
+```
+
+---
+
+## PlayerAPI
+
+The PlayerAPI simplifies player-related tasks such as managing actors, steam IDs, and player states.
+
+### Variables
+
+```gdscript
+PlayerAPI.local_player  # Local player as an actor
+PlayerAPI.in_game       # Checks if the player is in the game
+PlayerAPI.players       # List of player actors in the game
+```
+
+### Signals
+
+```gdscript
+_player_added(player)   # Triggered when a player joins, returns the player actor
+_player_removed(player) # Triggered when a player leaves, returns the player actor
+_ingame()               # Triggered when the local player is in-game
+```
+
+### Functions
+
+```gdscript
+is_player(node: Node) -> bool                      # Checks if a node is a Player
+get_player_from_steamid(steamid: String) -> Actor  # Gets player by Steam ID
+get_player_name(player: Actor) -> String           # Returns player's name
+get_player_title(player: Actor) -> String          # Returns player's title
+get_player_steamid(player: Actor) -> String        # Returns player's Steam ID
+```
+
+### Example Usage
+
+```gdscript
 var PlayerAPI
 
 func _ready():
-	PlayerAPI = get_node_or_nuill("/root/BlueberryWolfiAPIs/PlayerAPI")
+	PlayerAPI = get_node_or_null("/root/BlueberryWolfiAPIs/PlayerAPI")
 	PlayerAPI.connect("_player_added", self, "init_player")
 
-func init_player(player: Actor)
-  print(PlayerAPI.get_player_name(player)
-```
-# Keybinds API:
-## An API that allows mods to register keybinds, and subscribe to a custom signal for input events. Then, mod controls can be configured in the in-game controls menu.
-### Signals:
-```gd
-_keybind_changed(keybind: String, title: String, input_event: InputEventKey)
-```
-### Functions:
-```gd
-register_keybind(keybind_data: Dictionary) -> String # returns signal_name
-# Register keybind automatically registers a keybind, and returns the name of the signal. It also automatically creates another signal with the signal name, with "_up" appended for key release
+func init_player(player: Actor):
+    print(PlayerAPI.get_player_name(player))
 ```
 
-### Code Example:
-```gd
+---
+
+## KeybindsAPI
+
+The KeybindsAPI allows mods to register custom keybinds and trigger signals for input events. Configurable in the in-game controls menu.
+
+### Signals
+
+```gdscript
+_keybind_changed(keybind: String, title: String, input_event: InputEventKey)
+```
+
+### Functions
+
+```gdscript
+register_keybind(keybind_data: Dictionary) -> String  # Registers a keybind, returns the signal name
+```
+*Note: A signal with "_up" appended to the signal name is automatically created for key release.*
+
+### Example Usage
+
+```gdscript
 KeybindsAPI = get_node_or_null("/root/BlueberryWolfiAPIs/KeybindsAPI")
 
 var pushtalk_mic_signal = KeybindAPI.register_keybind({
@@ -67,5 +116,9 @@ func _on_to_talk_button_down() -> void:
 func _on_to_talk_button_up() -> void:
   print("Push to talk off")
 ```
-requires:
-https://github.com/NotNite/GDWeave
+
+---
+
+## Requirements
+
+Ensure [GDWeave](https://github.com/NotNite/GDWeave) is installed to use these APIs.
