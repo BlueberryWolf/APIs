@@ -3,11 +3,6 @@ extends Node
 signal _keybind_changed(keybind, title, input_event)
 
 const ButtonScene = preload("res://mods/BlueberryWolfi.APIs/Modules/BlueberryWolfi.KeybindsAPI/Scenes/button.tscn")
-<<<<<<< HEAD
-=======
-
-var PlayerAPI
->>>>>>> 73a5160e57c1ff67fd57bc61db7425479ce472d2
 
 var _keybinds: Array = []
 var _signals: Array = []
