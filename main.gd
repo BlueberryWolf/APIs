@@ -14,5 +14,5 @@ func _ready():
 		var resource = MODULES_LIST[module]
 		
 		modules[module] = resource.new()
-		modules[module].set_name(module.replace("BlueberryWolfi", ""))
+		modules[module].set_name(module.replace(PREFIX, ""))
 		add_child(modules[module])

@@ -45,6 +45,8 @@ func get_player_steamid(player: Actor):
 	return player.owner_id
 	
 func player_removed(node):
+	if node.name == "player":
+		local_player = null
 	emit_signal("_player_added", node)
 	
 func player_added(node):

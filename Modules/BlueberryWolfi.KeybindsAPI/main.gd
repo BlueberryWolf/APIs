@@ -2,9 +2,7 @@ extends Node
 
 signal _keybind_changed(keybind, title, input_event)
 
-const ButtonScene = preload("res://mods/BlueberryWolfi.Apis/Modules/BlueberryWolfi.KeybindsAPI/Scenes/button.tscn")
-
-var PlayerAPI
+const ButtonScene = preload("res://mods/BlueberryWolfi.APIs/Modules/BlueberryWolfi.KeybindsAPI/Scenes/button.tscn")
 
 var _keybinds: Array = []
 var _signals: Array = []
@@ -13,7 +11,6 @@ var _is_initialized: bool = false
 var controls_container: VBoxContainer
 
 func _ready() -> void:
-	PlayerAPI = get_tree().root.get_node("BlueberryWolfiAPIs/PlayerAPI")
 	var options_menu = get_node_or_null("/root/OptionsMenu")
 	if not options_menu:
 		push_error("OptionsMenu not found!")
@@ -25,9 +22,7 @@ func _ready() -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	if not PlayerAPI.local_player: return
-	if not event is InputEventKey or PlayerAPI.local_player.busy:
-		return
+	if not event is InputEventKey: return
 	
 	for keybind in _keybinds:
 		if not InputMap.has_action(keybind.action_name):
